@@ -14,6 +14,7 @@ var speed_label = document.getElementById("speed_label");
 var reward_label = document.getElementById("reward_label");
 var brick_btn = document.getElementById('brick_btn');
 var reward_btn =document.getElementById('reward_btn');
+var toggle_policy_evaluation_btn =document.getElementById('toggle_policy_evaluation_btn');
 var toggle_value_iteration_btn =document.getElementById('toggle_value_iteration_btn');
 var toggle_policy_iteration_btn =document.getElementById('toggle_policy_iteration_btn');
 var reset =document.getElementById('reset_btn');
@@ -26,6 +27,7 @@ function disable_buttons(){
 	gamma_slider.disabled = true;
 	speed_slider.disabled= true;
 	reward_slider.disabled = true;
+	toggle_policy_evaluation_btn.disabled = true;
 	toggle_value_iteration_btn.disabled = true;
 	toggle_policy_iteration_btn.disabled = true;
 	reset_btn.disabled = true;
@@ -37,6 +39,7 @@ function enable_buttons(){
 	gamma_slider.disabled = false;
 	speed_slider.disabled= false;
 	reward_slider.disabled = false;
+	toggle_policy_evaluation_btn.disabled = false;
 	toggle_value_iteration_btn.disabled = false;
 	toggle_policy_iteration_btn.disabled = false;
 	reset_btn.disabled = false;
@@ -55,6 +58,12 @@ reward_btn.addEventListener("click", () => {
 				selected_state_type = STATE_TYPE.PIT;
 		else
 				selected_state_type = STATE_TYPE.GOAL;
+});
+
+toggle_policy_evaluation_btn.addEventListener("click", () => {
+	disable_buttons();
+	solver = new MDPSolver(env, gamma_value, 0.00001, 100, speed);
+	solver.iterative_policy_evaluation();
 });
 
 toggle_value_iteration_btn.addEventListener("click", () => {

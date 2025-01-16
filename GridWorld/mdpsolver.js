@@ -33,7 +33,7 @@ class MDPSolver{
   }
 
   policy_iteration(){
-    var temp_policy = this.random_poloicy();
+    var temp_policy = this.random_policy();
     debugger
     while(--this.iterations > 0){
       for(var i = 0; i <12; i++){
@@ -46,6 +46,19 @@ class MDPSolver{
     this.env.updateValuesAndPolicy(this.values_to_update, this.policies_to_update, this.speed);
   }
 
+  iterative_policy_evaluation(){
+    var temp_policy = this.random_policy();
+    debugger
+    while(--this.iterations > 0){
+      for(var i = 0; i <12; i++){
+          this.policy_evaluation(temp_policy);
+          this.policies_to_update.push(temp_policy);
+      }
+      this.display_q();
+    }
+    this.env.updateValuesAndPolicy(this.values_to_update, this.policies_to_update, this.speed);
+  }
+
   policy_evaluation(policy){
     var temp_values = []
     this.env.states.forEach((state, i) => {
@@ -54,7 +67,7 @@ class MDPSolver{
     this.values_to_update.push(this.values = temp_values.slice());
   }
 
-  random_poloicy(){
+  random_policy(){
     var policy = [];
     for(var i = 0; i < this.env.states.length; i++){
       var temp = [];
@@ -81,6 +94,13 @@ class MDPSolver{
     return reward;
   }
 
+  display_q(){
+    this.env.states.forEach((state, i) => {
+        var q_values = [];
+        for(let action in state.legal_actions)
+             q_values.push(this.q_value(state, action));
+    });
+  }
 
   policy_improvement(){
     this.policy = [];
