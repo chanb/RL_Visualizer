@@ -74,7 +74,7 @@ toggle_value_iteration_btn.addEventListener("click", () => {
 
 toggle_policy_iteration_btn.addEventListener("click", () => {
 	disable_buttons();
-	solver = new MDPSolver(env, gamma_value, 0.0000001, 4, speed);
+	solver = new MDPSolver(env, gamma_value, 0.00001, 100, speed);
 	solver.policy_iteration();
 });
 
